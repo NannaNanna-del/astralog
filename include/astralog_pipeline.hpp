@@ -72,7 +72,8 @@ public:
   SequentialPipeline();
 
   void
-  initialize(const std::string &output_csv = config::DEFAULT_OUTPUT_VALID,
+  initialize(const std::string &sensors_config, const std::string &rules_config,
+             const std::string &output_csv = config::DEFAULT_OUTPUT_VALID,
              const std::string &output_log = config::DEFAULT_OUTPUT_ANOMALIES);
 
   void process_packet(const std::string &json_str);
