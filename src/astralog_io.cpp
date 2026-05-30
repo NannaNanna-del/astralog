@@ -27,9 +27,8 @@ LogSink::LogSink(const std::string &filepath) : filepath_(filepath) {}
 
 void LogSink::write_anomaly(const data::EvaluationRecord &record) {
   // Format: TIMESTAMP;RULE_ID;VIOLATED_SENSOR;CURRENT_VALUE
-  buffer_.push_back(std::format("{};{};{};{}", record.timestamp,
-                                record.rule_id, record.sensor_id,
-                                record.value));
+  buffer_.push_back(std::format("{};{};{};{}", record.timestamp, record.rule_id,
+                                record.sensor_id, record.value));
 }
 
 void LogSink::flush() {

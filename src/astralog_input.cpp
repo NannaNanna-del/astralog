@@ -9,7 +9,8 @@ using json = nlohmann::json;
 
 std::vector<std::string> InputSource::read_all() {
   std::vector<std::string> packets;
-  for_each([&packets](const std::string &packet) { packets.push_back(packet); });
+  for_each(
+      [&packets](const std::string &packet) { packets.push_back(packet); });
   return packets;
 }
 
@@ -53,7 +54,7 @@ void CsvFileSource::for_each(const PacketHandler &handler) {
     strip_cr(line);
     if (line.empty()) {
       continue;
-    } 
+    }
     if (!header_skipped) {
       header_skipped = true;
       continue;
