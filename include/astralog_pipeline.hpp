@@ -41,7 +41,9 @@ public:
   RuleEvaluationFilter();
 
   void add_rule(std::unique_ptr<rules::Rule> rule);
+  void load_rules(const std::string &rule_config);
 
+  // sequential evaluation: process batch against all rules
   std::vector<data::EvaluationRecord>
   evaluate_sequential(const data::MeasurementBatch &batch);
 
@@ -93,6 +95,17 @@ private:
   RuleEvaluationFilter rule_evaluator_;
   std::unique_ptr<log::CsvSink> csv_sink_;
   std::unique_ptr<log::LogSink> log_sink_;
+
+  // helper method to handle the shared routing logic
+  void dispatch_records(const std::vector<data::EvaluationRecord> &records) {
+    for (const auto &record : records) {
+      if (record.result == EvaluationResult::NOMINAL) {
+        csv_sink_->write_nominal(record);
+      } else {
+        log_sink_->write_anomaly(record);
+      }
+    }
+  }
 };
 
 } // namespace astralog::pipeline
