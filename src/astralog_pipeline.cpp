@@ -46,12 +46,16 @@ data::MeasurementBatch BatchPipe::flush() {
   return result;
 }
 
+// RuleEvaluationFilter implementation
 RuleEvaluationFilter::RuleEvaluationFilter() = default;
 
 void RuleEvaluationFilter::add_rule(std::unique_ptr<rules::Rule> rule) {
   rules_.push_back(std::move(rule));
   sort_rules_by_priority();
 }
+
+// TODO
+void RuleEvaluationFilter::load_rules(const std::string &rules_config_path) {}
 
 std::vector<data::EvaluationRecord>
 RuleEvaluationFilter::evaluate_sequential(const data::MeasurementBatch &batch) {
