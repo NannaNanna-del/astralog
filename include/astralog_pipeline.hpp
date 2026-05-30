@@ -56,7 +56,11 @@ private:
   std::vector<std::unique_ptr<rules::Rule>> rules_;
 
   // sort rules by priority
-  void sort_rules_by_priority();
+  void sort_rules_by_priority() {
+    std::sort(rules_.begin(), rules_.end(), [](const auto &a, const auto &b) {
+      return a->priority() < b->priority();
+    });
+  };
 
   // Evaluate single measurement against all rules
   std::optional<data::EvaluationRecord>
