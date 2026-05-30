@@ -69,29 +69,24 @@ RuleEvaluationFilter::evaluate_sequential(const data::MeasurementBatch &batch) {
     m.sensor_id = batch.sensor_ids()[i];
     m.timestamp = batch.timestamps()[i];
 
-    // evaluate all rules for this measurement
-    bool is_anomaly = false;
-    std::string anomaly_rule_id;
-
+    // Evaluate every single rule for this measurement
     for (auto &rule : rules_) {
       auto result = rule->evaluate(m.sensor_id, m.value);
+
+      data::EvaluationRecord record;
+      record.timestamp = m.timestamp;
+      record.sensor_id = m.sensor_id;
+      record.value = m.value;
+      record.rule_id = rule->id();
+
       if (result == EvaluationResult::ANOMALY) {
-        is_anomaly = true;
-        anomaly_rule_id = rule->id();
-        break;
+        record.result = EvaluationResult::ANOMALY;
+      } else {
+        record.result = EvaluationResult::NOMINAL;
       }
+
+      records.push_back(record);
     }
-
-    // create record
-    data::EvaluationRecord record;
-    record.timestamp = m.timestamp;
-    record.sensor_id = m.sensor_id;
-    record.value = m.value;
-    record.result =
-        is_anomaly ? EvaluationResult::ANOMALY : EvaluationResult::NOMINAL;
-    record.rule_id = anomaly_rule_id;
-
-    records.push_back(record);
 
     // Update state for next measurement
     for (auto &rule : rules_) {
