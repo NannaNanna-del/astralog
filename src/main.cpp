@@ -19,6 +19,10 @@ int main(int argc, char *argv[]) {
         "R1", 100.0, astralog::Priority::HIGH, "TEMP-001", '>');
     pipeline->add_rule(std::move(simple_rule));
 
+    auto simple_rule2 = std::make_unique<astralog::rules::SimpleRule>(
+        "R2", 100.0, astralog::Priority::HIGH, "TEMP-012", '>');
+    pipeline->add_rule(std::move(simple_rule2));
+
     std::ifstream file;
     std::istream *input = &std::cin;
 
