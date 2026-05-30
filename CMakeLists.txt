@@ -15,6 +15,8 @@ set(SEQUENTIAL_SOURCES
     src/astralog_data.cpp
     src/astralog_rules.cpp
     src/astralog_pipeline.cpp
+    src/astralog_io.cpp
+    src/astralog_input.cpp
 )
 
 add_executable(astralog-seq ${SEQUENTIAL_SOURCES})
