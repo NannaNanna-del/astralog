@@ -2,6 +2,11 @@
 
 namespace astralog {
 
+std::unique_ptr<pipeline::SequentialPipeline>
+PipelineFactory::create_sequential() {
+  return std::make_unique<pipeline::SequentialPipeline>();
+}
+
 bool SystemInitializer::load_sensor_config(const std::string &yaml_path) {
   // TODO: Implement YAML parsing for sensor configuration
   return true;
