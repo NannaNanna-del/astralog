@@ -2,13 +2,16 @@
 
 #include "astralog_config.hpp"
 #include <nlohmann/json.hpp>
+#include <optional>
+#include <string>
+#include <vector>
 
 namespace astralog::data {
 using json = nlohmann::json;
 
 // JSON packet from sensor
 struct Measurement {
-  std::string timestam;
+  std::string timestamp;
   std::string sensor_id;
   double value;
   std::string priority;
