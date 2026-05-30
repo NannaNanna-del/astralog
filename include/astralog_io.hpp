@@ -19,7 +19,7 @@ public:
   CsvSink(const std::string &filepath);
 
   void write_nominal(const data::EvaluationRecord &record) override;
-  void write_anomaly(const data::EvaluationRecord &record) override;
+  void write_anomaly(const data::EvaluationRecord &record) override {};
   void flush() override;
 
 private:
