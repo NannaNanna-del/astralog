@@ -1,0 +1,27 @@
+name: Code Formatting Check
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install Clang-Format
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang-format
+
+    - name: Run Format Check
+      run: |
+        # Finds all C++ files and checks them against your .clang-format file.
+        # --dry-run ensures no files are modified on the server.
+        # --Werror forces the command to fail if misformatted code is found.
+        find . -regex '.*\.\(cpp\|hpp\|cc\|cxx\|h\|hh\)' -exec clang-format -style=LLVM --dry-run --Werror {} +
