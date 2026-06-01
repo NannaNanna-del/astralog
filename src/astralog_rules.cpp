@@ -95,7 +95,7 @@ Rule::from_json(const json &json, std::vector<std::shared_ptr<Rule>> &rules) {
     for (int i = 0; i < conditions.size(); ++i) {
       for (int j = 0; j < rules.size(); ++j) {
         if (rules[j]->id() == conditions[i]) {
-          parent_rules.push_back(std::make_shared<Rule>(rules[j]));
+          parent_rules.push_back(rules[j]);
         }
       }
     }
@@ -129,6 +129,8 @@ Rule::from_json(const json &json, std::vector<std::shared_ptr<Rule>> &rules) {
       return std::make_shared<StatefulRule>(rule);
     }
   }
+
+  return nullptr;
 }
 
 // SimpleRule implementation
